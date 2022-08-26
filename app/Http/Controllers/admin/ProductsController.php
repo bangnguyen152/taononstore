@@ -11,6 +11,7 @@ use App\Models\ProductDetailModel;
 use App\Models\ProductModel;
 use App\Models\User;
 use App\Models\VoucherModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -23,6 +24,7 @@ class ProductsController extends Controller
         $search = $request->get('search');
         $data = ProductModel::query()
             ->where('title', 'like', '%'.$search.'%')
+            ->orderBy('created_at','desc')
             ->paginate(5);
         foreach($data as $each){
             $each['category_id'] = checkCategory($each->category_id);
@@ -66,6 +68,8 @@ class ProductsController extends Controller
         $imageName = 'photos/'.time().'.'.$photo->extension();
         $photo->move(public_path('photos'), $imageName);
         $product-> photo = $imageName;
+        $product->created_at = Carbon::now();
+
         if (!$request->has('status')) {
             $product->status = 0;
         } else {
@@ -119,6 +123,7 @@ class ProductsController extends Controller
                     'description' => $request->input('description'),
                     'status' => $request->input('status'),
                     'photo'=> $imageName,
+                    'updated_at' => Carbon::now(),
                 ]);
         }
         else{

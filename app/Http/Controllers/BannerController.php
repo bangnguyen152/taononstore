@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BannerModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +15,7 @@ class BannerController extends Controller
         $search = $request->get('search');
         $data = BannerModel::query()
             -> where('title','like','%'.$search.'%')
+            ->orderBy('created_at','desc')
             -> paginate(5);
         $data->appends(['search' => $search]);
         return view('admin.banner.index',[
@@ -30,6 +32,8 @@ class BannerController extends Controller
         $banner-> description = $request->get('description');
         $banner-> start_at = $request->get('start_at');
         $banner-> end_at = $request->get('end_at');
+        $banner->created_at = Carbon::now();
+
         foreach ($request->photos as $photo) {
             $imageName = 'photos/'.time().'.'.$photo->extension();
             $photo->move(public_path('photos'), $imageName);
@@ -63,6 +67,8 @@ class BannerController extends Controller
                     'end_at' => $request->input('end_at'),
                     'thumbnail' => $imageName,
                     'status' => $request->input('status'),
+                    'updated_at' => Carbon::now(),
+
                 ]);
         return redirect()->route('banner');
     }

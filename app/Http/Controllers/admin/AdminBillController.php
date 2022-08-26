@@ -20,6 +20,7 @@ class AdminBillController extends Controller
         $search = $request->get('search');
         $data = Bill::query()
             ->where('full_name', 'like', '%'.$search.'%')
+            ->orderBy('order_date','desc')
             ->paginate(6);
         $data->appends(['search' => $search]);
         return view('admin.bill.index', [
@@ -71,6 +72,7 @@ class AdminBillController extends Controller
             ->join('orders', 'users.id', '=', 'orders.user_id')
             ->select('users.*', 'orders.id as bill_id', 'orders.order_date', 'orders.note as bill_note', 'orders.status as bill_status')
             ->where('orders.id', '=', $bill->id)
+            ->orderBy('order_date','desc')
             ->first();
 
         $billInfo = DB::table('order_details')

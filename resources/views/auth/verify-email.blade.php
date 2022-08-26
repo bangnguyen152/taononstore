@@ -1,46 +1,59 @@
-<x-auth-layout>
-    <!--begin::Verify Email Form-->
-    <div class="w-100">
+@extends('auth.layout')
 
-        <!--begin::Heading-->
-        <div class="text-center mb-10">
-            <!--begin::Title-->
-            <h1 class="text-dark mb-3">
-                {{ __('Verify Email') }}
-            </h1>
-            <!--end::Title-->
+@section('content')
+    <main class="login-form">
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Reset Password</div>
+                        <div class="card-body">
 
-            <!--begin::Link-->
-            <div class="text-gray-400 fw-bold fs-4">
-                {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+                            <form action="{{ route('reset.password.post') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="token" value="{{ $token }}">
+
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="email_address" class="form-control" name="email" required autofocus>
+                                        @if ($errors->has('email'))
+                                            <span class="text-danger">{{ $errors->first('email') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                                    <div class="col-md-6">
+                                        <input type="password" id="password" class="form-control" name="password" required autofocus>
+                                        @if ($errors->has('password'))
+                                            <span class="text-danger">{{ $errors->first('password') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
+                                    <div class="col-md-6">
+                                        <input type="password" id="password-confirm" class="form-control" name="password_confirmation" required autofocus>
+                                        @if ($errors->has('password_confirmation'))
+                                            <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        Reset Password
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!--::Link-->
-
-            <!--begin::Session Status-->
-            @if (session('status') === 'verification-link-sent')
-                <p class="font-medium text-sm text-gray-500 mt-4">
-                    {{ __('A new verification link has been sent to the email address you provided during registration.') }}
-                </p>
-            @endif
-            <!--end::Session Status-->
         </div>
-        <!--begin::Heading-->
-
-        <!--begin::Actions-->
-        <div class="d-flex flex-wrap justify-content-center pb-lg-0">
-
-            <form method="POST" action="{{ theme()->getPageUrl('verification.send') }}">
-                @csrf
-                <button type="submit" class="btn btn-lg btn-primary fw-bolder me-4">{{ __('Resend Verification Email') }}</button>
-            </form>
-
-            <form method="POST" action="{{ theme()->getPageUrl('logout') }}">
-                @csrf
-                <button type="submit" class="btn btn-lg btn-light-primary fw-bolder me-4">{{ __('Log out') }}</button>
-            </form>
-        </div>
-        <!--end::Actions-->
-    </div>
-
-    <!--end::Verify Email Form-->
-</x-auth-layout>
+    </main>
+@endsection

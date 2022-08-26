@@ -19,6 +19,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\ProfileController;
@@ -33,11 +34,14 @@ Route::post('login',[AuthController::class,'login'])->name('login.perform');
 Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 Route::get('/register',[AuthController::class,'register'])->name('register');
 Route::post('/register',[AuthController::class,'register_process'])->name('register.process');
+Route::get('forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [AuthController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+Route::get('reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [AuthController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 Route::group([
     'middleware'=> 'admin',
     ], function () {
-        Route::get('/admin',[UserController::class,'home'])->name('master');
-
+        Route::get('/admin',[DashboardController::class,'index'])->name('master');
     //quan li user
         Route::get('/admin/user',[UserController::class,'index'])->name('user');
         Route::get('/create',[UserController::class,'create'])->name('create');
@@ -117,5 +121,8 @@ Route::post('/checkout', [CartController::class,'postCheckOut'])->name('checkout
 Route::get('cart/remove/{id}', [CartController::class,'remove'])->name('remove');
 //profile
 Route::get('profile/{id}', [ProfileController::class,'index'])->name('profile');
-Route::post('profile/{id}', [ProfileController::class,'changePassword'])->name('profile.update')->middleware('change pass');
+Route::post('profile/update/info/{id}', [ProfileController::class,'changeProfile'])->name('profile.update');
+Route::post('profile/update/password/{id}', [ProfileController::class,'changePassword'])->name('password.update')->middleware('change pass');
+Route::get('profile/history/{id}', [ProfileController::class,'history'])->name('history');
+Route::post('profile/comment/{id}', [ProfileController::class,'comment'])->name('comment');
 

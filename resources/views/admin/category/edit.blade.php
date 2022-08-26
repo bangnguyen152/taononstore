@@ -24,7 +24,7 @@
                     <div id="kt_account_settings_profile_details" class="collapse show">
                         <!--begin::Form-->
                         <form id="kt_account_profile_details_form" class="form" method="post"
-                              action="{{route('voucher.update',$voucher)}}">
+                              action="{{route('category.update',$category)}}">
                             @csrf
                             <!--begin::Card body-->
                             <div class="card-body border-top p-9">
@@ -33,7 +33,7 @@
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <!--begin::Label-->
-                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">Code</label>
+                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">Name</label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8">
@@ -41,9 +41,9 @@
                                         <div class="row">
                                             <!--begin::Col-->
                                             <div class="col-lg-12 fv-row">
-                                                <input type="text" name="discount_code"
+                                                <input type="text" name="name"
                                                        class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                                       value="{{$voucher->discount_code}}"
+                                                       value="{{$category->name}}"
                                                        placeholder="Full Name"/>
                                             </div>
                                             <!--end::Col-->
@@ -57,47 +57,21 @@
                                 </div>
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
-                                <div class="row mb-6">
-                                    <!--begin::Label-->
-                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">Discount</label>
-                                    <!--end::Label-->
-                                    <!--begin::Col-->
-                                    <div class="col-lg-8 fv-row">
-                                        <input type="text" name="discount"
-                                               class="form-control form-control-lg form-control-solid"
-                                               value="{{$voucher->discount}}"
-                                               placeholder="Discount"/>
-                                    </div>
-                                    <!--end::Col-->
-                                </div>
+{{--                                <div class="row mb-6">--}}
+{{--                                    <!--begin::Label-->--}}
+{{--                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">Discount</label>--}}
+{{--                                    <!--end::Label-->--}}
+{{--                                    <!--begin::Col-->--}}
+{{--                                    <div class="col-lg-8 fv-row">--}}
+{{--                                        <input type="text" name="discount"--}}
+{{--                                               class="form-control form-control-lg form-control-solid"--}}
+{{--                                               value="{{$category->discount}}"--}}
+{{--                                               placeholder="Discount"/>--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Col-->--}}
+{{--                                </div>--}}
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
-                                <div class="row mb-0">
-                                    <!--begin::Label-->
-                                    <label class="col-lg-4 col-form-label fw-bold fs-6">Status</label>
-                                    <!--begin::Label-->
-                                    <!--begin::Label-->
-                                    @if($voucher->status==0)
-                                        <div class="col-lg-8 d-flex align-items-center">
-                                            <div class="form-check form-check-solid form-switch fv-row">
-                                                <label>
-                                                    <input class="form-check-input w-45px h-30px" type="checkbox"
-                                                           name="status" value="active"/>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="col-lg-8 d-flex align-items-center">
-                                            <div class="form-check form-check-solid form-switch fv-row">
-                                                <label>
-                                                    <input class="form-check-input w-45px h-30px" type="checkbox"
-                                                           name="status" value="active" checked/>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    @endif
-                                    <!--begin::Label-->
-                                </div>
                                 <!--end::Input group-->
                             </div>
                             <!--end::Card body-->

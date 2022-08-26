@@ -24,7 +24,7 @@ class ChangePasswordUser
             -> where('id', session()->get('id'))
             ->firstOrFail();
         if (!Hash::check($request->get('current-password'),$user->password)){
-            return Redirect::back()->withErrors(['msg' => 'Sai mật khẩu!!!']);
+            return Redirect::back()->with('alert' , 'Sai mật khẩu!!!');
         }
         return $next($request);
     }

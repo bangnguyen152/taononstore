@@ -47,16 +47,24 @@
                 <a href="{{route('phukien')}}" class="nav-item__link">Phụ kiện</a>
             </li>
         </ul>
-
         <div class="nav-btn">
             <!-- btn cart -->
-            <div class="nav-btn__cart">
-                <a href="{{route('cart')}}">
-                    <i class="nav-icon ti-shopping-cart"></i>
-                </a>
-                <div class="cart__quantity">{{\Cart::count()}}</div>
-            </div>
-            <!-- btn search -->
+            <@if(!session()->has('id'))
+
+                <div class="nav-btn__cart">
+                    <a href="{{route('login')}}">
+                        <i class="nav-icon ti-shopping-cart"></i>
+                    </a>
+                </div>
+            @else
+                <div class="nav-btn__cart">
+                    <a href="{{route('cart')}}">
+                        <i class="nav-icon ti-shopping-cart"></i>
+                    </a>
+                    <div class="cart__quantity">{{\Cart::count()}}</div>
+                </div>
+                <!-- btn search -->
+            @endif
             <div class="nav-btn__search">
                 <i class="nav-icon ti-search"></i>
             </div>
@@ -72,6 +80,8 @@
                         <ul class="user-dropdown__list">
                             <li class="user-dropdown__item">{{session()->get('full_name')}}</li>
                             <li class="user-dropdown__item"><a href="{{route('profile',session()->get('id'))}}">Tài khoản của tôi</a></li>
+                            <li class="user-dropdown__item"><a href="{{route('history',session()->get('id'))}}">Lịch sử mua hàng </a></li>
+
                             <li class="user-dropdown__item"><a href="{{route('logout')}}">Đăng xuất</a></li>
                         </ul>
                     </div>
@@ -99,6 +109,7 @@
                                 alt=""
                                 class="cart-item__img"
                             />
+
                             <div class="cart-item__info">
                                 <div class="cart-item__name-color">
                       <span class="cart-item__name"
@@ -110,6 +121,12 @@
 
 {{--                                        <button class="cart-item__delete">Xoá</button>--}}
                                     </div>
+                                    <td class="cart_quantity">
+                                        <a href='{{url("gio-hang?id=$product->id&increment=1")}}'><button type="button" class="btn btn-default">+</button></a>
+                                        <input type="text" value="{{ $product->qty }}" style="width: 35px; text-align: center;">
+                                        <a href='{{url("gio-hang?id=$product->id&decrease=1")}}'><button type="button" class="btn btn-default">-</button></a>
+                                    </td>
+
                                 </div>
                             </div>
                             <div class="cart-item__price">
@@ -141,6 +158,7 @@
                                         placeholder="Tên của bạn"
                                         class="input-info"
                                         name="full_name"
+                                        value="{{$user->full_name}}"
                                     />
                                 </div>
                                 <div class="customer-phonenumber">
@@ -149,6 +167,7 @@
                                         placeholder="Số điện thoại"
                                         class="input-info"
                                         name="phone_number"
+                                        value="{{$user->phone_number}}"
                                     />
                                 </div>
                             </div>
@@ -158,6 +177,7 @@
                                     placeholder="Địa chỉ"
                                     class="input-long"
                                     name="address"
+                                    value="{{$user->address}}"
                                 />
                             </div>
                             <div class="customer-note">

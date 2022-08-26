@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategoryModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,6 +14,7 @@ class CategoryController extends Controller
         $search = $request->get('search');
         $data = CategoryModel::query()
             ->where('name', 'like', '%'.$search.'%')
+            ->orderBy('created_at','desc')
             ->paginate(5);
         $data->appends(['search' => $search]);
         return view('admin.category.index', [
@@ -30,6 +32,8 @@ class CategoryController extends Controller
     {
         $category = new CategoryModel();
         $category->name = $request->get('name');
+        $category->created_at = Carbon::now();
+
         $category->save();
 
         return redirect()->route('category');
@@ -47,7 +51,8 @@ class CategoryController extends Controller
         $category = DB::table('categories')
             ->where('id', $id)
             ->update([
-                'name' => $request->input('name')
+                'name' => $request->input('name'),
+                'updated_at' => Carbon::now(),
             ]);
         return redirect()->route('category');
     }

@@ -209,6 +209,13 @@ if (! function_exists('checkSession')) {
         return session()->get('id')===$id;
     }
 }
+if (! function_exists('checkLogin')) {
+    function checkLogin(): bool
+    {
+        return session()->has('id');
+    }
+}
+
 if (! function_exists('FinalPrice')) {
     function FinalPrice($code,$price): float|int
     {
@@ -236,6 +243,27 @@ if (! function_exists('CheckCategory')) {
         }
         else if ($id===6){
             return 'Phụ kiện';
+        }
+        return 'Không có';
+    }
+}
+if (! function_exists('ProductStatus')) {
+    function ProductStatus($id): string
+    {
+        if ($id ===0){
+            return 'Chưa xử lí';
+        }
+        else if ($id===1){
+            return 'Đã duyêt';
+        }
+        else if ($id===2){
+            return 'Đang giao';
+        }
+        else if ($id===3){
+            return 'Đã giao';
+        }
+        else if ($id===4){
+            return 'Thất bại';
         }
         return 'Không có';
     }

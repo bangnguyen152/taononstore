@@ -5,17 +5,13 @@
 <head>
     <meta charset="utf-8"/>
     <title>Táo Non</title>
-    <meta name="description"
-          content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free."/>
-    <meta name="keywords"
-          content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon"/>
-    <link rel="canonical" href="Https://preview.keenthemes.com/metronic8"/>
+
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="shortcut icon" href="{{asset('demo1/media/logos/favicon.ico')}}"/>
 
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="preload" href="{{asset('css/plugins.bundle.css')}}" as="style"
           onload="this.onload=null;this.rel='stylesheet'" type="text/css">
@@ -81,8 +77,10 @@
                         <!--begin::Input-->
                         <input class="form-control form-control-lg form-control-solid" type="email" name="email"
                                autocomplete="off" required autofocus/>
+                        <p class="text-danger">{{ $errors->first('email') }}</p>
                         <!--end::Input-->
                     </div>
+
                     <!--end::Input group-->
 
                     <!--begin::Input group-->
@@ -94,19 +92,27 @@
                             <!--end::Label-->
 
                             <!--begin::Link-->
-                            <a href="https://preview.keenthemes.com/metronic8/laravel/forgot-password?demo=demo1"
+                            <a href="{{route('forget.password.get')}}"
                                class="link-primary fs-6 fw-bolder">
                                 Forgot Password ?
                             </a>
                             <!--end::Link-->
                         </div>
+
                         <!--end::Wrapper-->
 
                         <!--begin::Input-->
                         <input class="form-control form-control-lg form-control-solid" type="password" name="password"
                                autocomplete="off" required/>
+                        @error('msg')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                        <p class="text-danger">{{ $errors->first('password') }}</p>
                         <!--end::Input-->
                     </div>
+
+
+
                     <div class="text-center">
                         <!--begin::Submit button-->
                         <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">

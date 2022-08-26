@@ -28,6 +28,7 @@
               href="https://preview.keenthemes.com/metronic8/laravel/demo1/plugins/global/plugins-custom.bundle.css">
     </noscript>
     <link href="{{asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset('css/dashboard.css')}}" rel="stylesheet" type="text/css"/>
 </head>
 
 
@@ -283,16 +284,15 @@
                                             <!--begin::Username-->
                                             <div class="d-flex flex-column">
                                                 <div class="fw-bolder d-flex align-items-center fs-5">
+                                                    <a href="{{route('profile',session()->get('id'))}}" class="fw-bold text-muted text-hover-primary fs-7">{{session()->get('full_name')}}</a>
 
-                                                    <span
-                                                        class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span>
                                                 </div>
-                                                <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{session()->get('email')}}</a>
+                                                <span
+                                                    class="badge badge-light-danger fw-bolder fs-7 ">SuAdmin</span>
                                             </div>
                                             <!--end::Username-->
                                         </div>
-                                    </div>
-                                    <!--end::Menu item-->
+                                    </div><!--end::Menu item-->
 
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">

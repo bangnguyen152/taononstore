@@ -47,15 +47,24 @@
                 <a href="{{route('phukien')}}" class="nav-item__link">Phụ kiện</a>
             </li>
         </ul>
-
         <div class="nav-btn">
             <!-- btn cart -->
-            <div class="nav-btn__cart">
-                <a href="{{route('cart')}}">
-                    <i class="nav-icon ti-shopping-cart"></i>
-                </a>
-                <div class="cart__quantity">{{\Cart::count()}}</div>
-            </div>
+            <@if(!session()->has('id'))
+
+                <div class="nav-btn__cart">
+                    <a href="{{route('login')}}">
+                        <i class="nav-icon ti-shopping-cart"></i>
+                    </a>
+                </div>
+            @else
+                <div class="nav-btn__cart">
+                    <a href="{{route('cart')}}">
+                        <i class="nav-icon ti-shopping-cart"></i>
+                    </a>
+                    <div class="cart__quantity">{{\Cart::count()}}</div>
+                </div>
+                <!-- btn search -->
+            @endif
             <!-- btn search -->
             <div class="nav-btn__search">
                 <i class="nav-icon ti-search"></i>
@@ -72,6 +81,8 @@
                         <ul class="user-dropdown__list">
                             <li class="user-dropdown__item">{{session()->get('full_name')}}</li>
                             <li class="user-dropdown__item"><a href="{{route('profile',session()->get('id'))}}">Tài khoản của tôi</a></li>
+                            <li class="user-dropdown__item"><a href="{{route('history',session()->get('id'))}}">Lịch sử mua hàng </a></li>
+
                             <li class="user-dropdown__item"><a href="{{route('logout')}}">Đăng xuất</a></li>
                         </ul>
                     </div>

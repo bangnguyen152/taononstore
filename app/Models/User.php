@@ -21,6 +21,8 @@ class User extends Model
         'address',
         'phone_number',
         'status',
+        'created_at',
+        'updated_at',
     ];
     public $timestamps = false;
 

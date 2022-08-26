@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Requests\User\StoreRequest;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as Controller;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,7 @@ class UserController extends Controller
         $search = $request->get('search');
         $data = User::query()
             -> where('full_name','like','%'.$search.'%')
+            ->orderBy('created_at','desc')
             -> paginate(5);
         $data->appends(['search' => $search]);
         return view('admin.user.index',[
@@ -30,6 +32,7 @@ class UserController extends Controller
     }
     public function store(StoreRequest $request){
         $user = new User();
+
         $user-> full_name = $request->get('full_name');
         $user-> address = $request->get('address');
         $user-> phone_number = $request->get('phone_number');
@@ -46,6 +49,7 @@ class UserController extends Controller
         }else{
             $user-> status = 1;
         }
+        $user->created_at = Carbon::now();
         $user->save();
 
         return redirect()->route('user');
@@ -74,7 +78,8 @@ class UserController extends Controller
                 'phone_number' => $request->input('phone_number'),
                 'address' => $request->input('address'),
                 'role_id' => $request->input('level'),
-                'status' => $request->input('status')
+                'status' => $request->input('status'),
+                'updated_at' => Carbon::now(),
             ]);
         return redirect()->route('user');
     }

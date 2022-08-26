@@ -81,18 +81,25 @@ License: For each use you must have a valid license purchased only from above li
                     <div class="fv-row mb-7">
                         <label class="form-label fw-bolder text-dark fs-6">Full Name</label>
                         <input class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="full_name" autocomplete="off" />
+                        <p class="text-danger">{{ $errors->first('full_name') }}</p>
+
                     </div>
                     <div class="fv-row mb-7">
                         <label class="form-label fw-bolder text-dark fs-6">Email</label>
                         <input class="form-control form-control-lg form-control-solid" type="email" placeholder="" name="email" autocomplete="off" />
+                        <p class="text-danger">{{ $errors->first('email') }}</p>
                     </div>
                     <div class="fv-row mb-7">
                         <label class="form-label fw-bolder text-dark fs-6">Address</label>
                         <input class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="address" autocomplete="off" />
+                        <p class="text-danger">{{ $errors->first('address') }}</p>
+
                     </div>
                     <div class="fv-row mb-7">
                         <label class="form-label fw-bolder text-dark fs-6">Phone Number</label>
                         <input class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="phone_number" autocomplete="off" />
+                        <p class="text-danger">{{ $errors->first('phone_number') }}</p>
+
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
@@ -106,6 +113,8 @@ License: For each use you must have a valid license purchased only from above li
                             <div class="position-relative mb-3">
                                 <label>
                                     <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="password" autocomplete="off" />
+                                    <p class="text-danger">{{ $errors->first('password') }}</p>
+
                                 </label>
 
                             </div>

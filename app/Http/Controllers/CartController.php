@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 use App\Models\Bill;
 use App\Models\BillDeltail;
 use App\Models\ProductModel;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
 class CartController extends Controller
@@ -22,11 +24,31 @@ class CartController extends Controller
     }
     public function listCartProduct($id=null){
         $product = ProductModel::find($id);
+        $user = DB::table('users')
+            ->where('id',session()->get('id'))
+            ->first();
         $products = \Cart::content();
         $viewData = [
+            'user' => $user,
             'products' => $products
         ];
-
+        if (Request::get('id') && (Request::get('increment')) == 1) {
+            $rows = \Cart::search(function($key, $value) {
+                return $key->id === Request::get('id');
+            });
+            $product = $rows->first();
+            \Cart::update($product->rowId, $product->qty + 1);
+        }
+        if (Request::get('id') && (Request::get('decrease')) == 1) {
+            $rows = \Cart::search(function($key, $value) {
+                return $key->id === Request::get('id');
+            });
+            $product = $rows->first();
+            \Cart::update($product->rowId, $product->qty - 1);
+        }
+        $rows = \Cart::search(function($key, $value) {
+            return $key->id === Request::get('id');
+        });
         return view('cart',$viewData);
     }
     public function getCheckOut() {
@@ -60,7 +82,7 @@ class CartController extends Controller
             $bill->full_name = Request::get('full_name');
             $bill->address = Request::get('address');
             $bill->phone_number = Request::get('phone_number');
-            $bill->order_date = date('Y-m-d' );
+            $bill->order_date = Carbon::now();
             //$bill->total = str_replace(',', '', \Cart::total());
             $bill->note = Request::get('note');
             $bill->status = 0;

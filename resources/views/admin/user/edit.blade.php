@@ -33,7 +33,7 @@
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <!--begin::Label-->
-                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">Full
+                                    <label class="col-lg-4 col-form-label fw-bold fs-6">Full
                                         Name</label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
@@ -60,7 +60,7 @@
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <!--begin::Label-->
-                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">Email</label>
+                                    <label class="col-lg-4 col-form-label fw-bold fs-6">Email</label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8 fv-row">
@@ -112,7 +112,6 @@
                                                value=""
                                                placeholder="Password"/>
                                     </div>-->
-                                </div>
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
                                 <!--end::Input group-->
@@ -125,7 +124,7 @@
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <!--begin::Label-->
-                                    <label class="col-lg-4 col-form-label required fw-bold fs-6">Level</label>
+                                    <label class="col-lg-4 col-form-label  fw-bold fs-6">Level</label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8 fv-row">
@@ -198,9 +197,9 @@
                             <!--end::Card body-->
                             <!--begin::Actions-->
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                <button type="reset" class="btn btn-light btn-active-light-primary me-2">
-                                    Discard
-                                </button>
+{{--                                <button type="reset" class="btn btn-light btn-active-light-primary me-2">--}}
+{{--                                    Discard--}}
+{{--                                </button>--}}
                                 <button type="submit" class="btn btn-primary"
                                         id="kt_account_profile_details_submit">Update
                                 </button>

@@ -75,6 +75,8 @@
                         <ul class="user-dropdown__list">
                             <li class="user-dropdown__item">{{session()->get('full_name')}}</li>
                             <li class="user-dropdown__item"><a href="{{route('profile',session()->get('id'))}}">Tài khoản của tôi</a></li>
+                            <li class="user-dropdown__item"><a href="{{route('profile',session()->get('id'))}}">Lịch sử mua hàng </a></li>
+
                             <li class="user-dropdown__item"><a href="{{route('logout')}}">Đăng xuất</a></li>
                         </ul>
                     </div>

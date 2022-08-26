@@ -1,41 +1,42 @@
-<x-auth-layout>
-    <!--begin::Forgot Password Form-->
-    <form method="POST" action="{{ theme()->getPageUrl('password.email') }}" class="form w-100" novalidate="novalidate" id="kt_password_reset_form">
-    @csrf
+@extends('auth.layout')
 
-        <!--begin::Heading-->
-        <div class="text-center mb-10">
-            <!--begin::Title-->
-            <h1 class="text-dark mb-3">
-                {{ __('Forgot Password ?') }}
-            </h1>
-            <!--end::Title-->
+@section('content')
+    <main class="login-form">
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Reset Password</div>
+                        <div class="card-body">
 
-            <!--begin::Link-->
-            <div class="text-gray-400 fw-bold fs-4">
-                {{ __('Enter your email to reset your password.') }}
+                            @if (Session::has('message'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ Session::get('message') }}
+                                </div>
+                            @else
+
+                            <form action="{{ route('forget.password.post') }}" method="POST">
+                                @csrf
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="email_address" class="form-control" name="email" required autofocus>
+                                        @if ($errors->has('email'))
+                                            <span class="text-danger">{{ $errors->first('email') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        Send Password Reset Link
+                                    </button>
+                                </div>
+                            </form>
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!--end::Link-->
         </div>
-        <!--begin::Heading-->
-
-        <!--begin::Input group-->
-        <div class="fv-row mb-10">
-            <label class="form-label fw-bolder text-gray-900 fs-6">{{ __('Email') }}</label>
-            <input class="form-control form-control-solid" type="email" name="email" autocomplete="off" value="{{ old('email') }}" required autofocus/>
-        </div>
-        <!--end::Input group-->
-
-        <!--begin::Actions-->
-        <div class="d-flex flex-wrap justify-content-center pb-lg-0">
-            <button type="submit" id="kt_password_reset_submit" class="btn btn-lg btn-primary fw-bolder me-4">
-                @include('partials.general._button-indicator')
-            </button>
-
-            <a href="{{ theme()->getPageUrl('login') }}" class="btn btn-lg btn-light-primary fw-bolder">{{ __('Cancel') }}</a>
-        </div>
-        <!--end::Actions-->
-    </form>
-    <!--end::Forgot Password Form-->
-
-</x-auth-layout>
+    </main>
+@endsection

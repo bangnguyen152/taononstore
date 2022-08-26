@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Táo non</title>
     <link rel="stylesheet" href="{{asset('assets/css/base.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/home.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/css/user.css')}}" />
 
     <link
@@ -51,12 +50,22 @@
 
         <div class="nav-btn">
             <!-- btn cart -->
-            <div class="nav-btn__cart">
-                <a href="{{route('cart')}}">
-                    <i class="nav-icon ti-shopping-cart"></i>
-                </a>
-                <div class="cart__quantity">{{\Cart::count()}}</div>
-            </div>
+            <@if(!session()->has('id'))
+
+                <div class="nav-btn__cart">
+                    <a href="{{route('login')}}">
+                        <i class="nav-icon ti-shopping-cart"></i>
+                    </a>
+                </div>
+            @else
+                <div class="nav-btn__cart">
+                    <a href="{{route('cart')}}">
+                        <i class="nav-icon ti-shopping-cart"></i>
+                    </a>
+                    <div class="cart__quantity">{{\Cart::count()}}</div>
+                </div>
+                <!-- btn search -->
+            @endif
             <!-- btn search -->
             <div class="nav-btn__search">
                 <i class="nav-icon ti-search"></i>
@@ -73,6 +82,7 @@
                         <ul class="user-dropdown__list">
                             <li class="user-dropdown__item">{{session()->get('full_name')}}</li>
                             <li class="user-dropdown__item"><a href="{{route('profile',session()->get('id'))}}">Tài khoản của tôi</a></li>
+                            <li class="user-dropdown__item"><a href="{{route('history',session()->get('id'))}}">Lịch sử mua hàng </a></li>
                             <li class="user-dropdown__item"><a href="{{route('logout')}}">Đăng xuất</a></li>
                         </ul>
                     </div>
@@ -85,6 +95,8 @@
             <div class="grid__row">
                 <div class="grid__col--2 infor-user-wrap">
                     <div class="infor-user">
+                        <form action="{{route("profile.update",session()->get('id'))}}" method="post" >
+                            @csrf
                         <span class="infor-persional-title">Thông tin cá nhân</span>
                         <div class="infor-persional">
                             <div class="infor-persional-form">
@@ -96,90 +108,71 @@
                                             class="form-avt__img"
                                         />
                                     </div>
-                                    <div class="form-name">
-                                        <div class="form-name-wrap">
-                                            <label for="" class="form-name__label"
-                                            >Họ và tên</label
-                                            >
-                                            <input type="text" class="form-name__input" value="{{session()->get('full_name')}}"/>
+
+                                </div>
+                                <div class="form-infor">
+                                    <div class="form-input">
+                                        <div class="form-input-wrap">
+                                            <label for="" class="form-input__label">Họ và tên</label>
+                                            <input type="text" class="form-input__input" value="{{$user->full_name}}" name="full_name"/>
                                         </div>
-                                        <div class="form-name-wrap">
-                                            <label for="" class="form-name__label"
-                                            >Email</label
-                                            >
-                                            <input type="text" class="form-name__input" value="{{session()->get('full_name')}}"/>
+                                        <div class="form-input-wrap">
+                                            <label for="" class="form-input__label">Số điện thoại</label>
+                                            <input type="tel" class="form-input__input" value="{{$user->phone_number}}" name="phone_number" />
                                         </div>
-                                        <div class="form-name-wrap">
-                                            <label for="" class="form-name__label"
-                                            >Điện Thoại</label
-                                            >
-                                            <input type="text" class="form-name__input" value="{{session()->get('full_name')}}"/>
+                                        <div class="form-input-wrap">
+                                            <label for="" class="form-input__label">Email</label>
+                                            <input type="email" class="form-input__input"  value="{{$user->email}}" disabled/>
                                         </div>
-                                        <div class="form-name-wrap">
-                                            <label for="" class="form-name__label"
-                                            >Địa chỉ</label
-                                            >
-                                            <input type="text" class="form-name__input" value="{{session()->get('full_name')}}"/>
+                                        <div class="form-input-wrap">
+                                            <label for="" class="form-input__label">Địa chỉ</label>
+                                            <input type="text" class="form-input__input" value="{{$user->address}}" name="address" />
                                         </div>
-{{--                                        <div class="form-name-wrap">--}}
-{{--                                            <label for="" class="form-name__label"--}}
-{{--                                            >Nickname</label--}}
-{{--                                            >--}}
-{{--                                            <input type="text" class="form-name__input" />--}}
-{{--                                        </div>--}}
                                     </div>
                                 </div>
-{{--                                <div class="form-infor">--}}
-{{--                                    <div class="form-birthday">--}}
-{{--                                        <div class="form-name-wrap">--}}
-{{--                                            <label for="" class="form-name__label"--}}
-{{--                                            >Ngày sinh</label--}}
-{{--                                            >--}}
-{{--                                            <input type="date" class="form-name__input" />--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="form-sex">--}}
-{{--                                        <div class="form-name-wrap">--}}
-{{--                                            <input type="radio" class="form-name__input-gender" name="gender-input" id="gender-male" value="Nam"/>--}}
-{{--                                            <label for="gender-male">Nam</label>--}}
-{{--                                            <input type="radio" class="form-name__input-gender"  name="gender-input" id="gender-female" value="Nữ"/>--}}
-{{--                                            <label for="gender-female">Nữ</label>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
                             </div>
+                            <button class="submit-btn ">Lưu thay đổi</button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            <div class="grid__row">
-                <div class="grid__col--2 change-pass-wrap">
-                    <span class="infor-persional-title">Đổi mật khẩu</span>
-                    @if($errors->any())
-                        <h4>{{$errors->first()}}</h4>
-                    @endif
-                    <form action="{{route('profile.update',session()->get('id'))}}" class="change-password-form" method="post">
-                        @csrf
-                        <input
-                            type="password"
-                            class="change-password-input"
-                            name="current-password"
-                            placeholder="Mật khẩu hiện tại"
-                        />
+        </div>
+        <div class="grid__row">
+            <div class="grid__col--2 change-pass-wrap">
+                <span class="infor-persional-title">Đổi mật khẩu</span>
 
-                    <div  class="change-password-form">
-                        <input type="password" class="change-password-input" placeholder="Mật khẩu mới" />
-                    </div>
-                    <div class="change-password-form">
-                        <input type="password" class="change-password-input" placeholder="Nhập lại mật khẩu mới" name="new_password"/>
-                    </div>
-                    <button class="submit-btn " type="submit">Lưu thay đổi</button>
-                    </form>
+                <form action="{{route('password.update',session()->get('id'))}}" method="post" class="change-password-form" >
+                    @csrf
+                    <input
+                        type="password"
+                        class="change-password-input"
+                        name="current-password"
+                        placeholder="Mật khẩu hiện tại"
+                    />
+
+                <div  class="change-password-form">
+                    <input type="password" class="change-password-input" placeholder="Mật khẩu mới" name="new_password"/>
                 </div>
+                <div  class="change-password-form">
+                    <input type="password" class="change-password-input" placeholder="Nhập lại mật khẩu mới"/>
+                </div>
+                <button class="submit-btn ">Lưu thay đổi</button>
+                </form>
+                @if(session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
+                @if(session()->has('alert'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('alert') }}
+                    </div>
+                @endif
             </div>
-            <div class="grid__row">
-                <div class="grid__col--2">
-                </div>
+        </div>
+        <div class="grid__row">
+            <div class="grid__col--2">
             </div>
         </div>
     </div>
