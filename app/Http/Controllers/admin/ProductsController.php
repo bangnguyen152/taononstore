@@ -64,6 +64,7 @@ class ProductsController extends Controller
         $product->discount = $request->get('discount');
         $product->description = $request->get('description');
         $product->created_at = $request->get('created_at');
+        $product->sold = 0;
         $photo = $request->photo;
         $imageName = 'photos/'.time().'.'.$photo->extension();
         $photo->move(public_path('photos'), $imageName);

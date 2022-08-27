@@ -22,7 +22,7 @@ class DashboardController extends Controller
         $profit = Bill::query()
             ->join('order_details', 'orders.id','=','order_details.order_id')
             -> where('status','=','3')
-            ->sum('price');
+            ->sum('total_money');
         $recentsales = Bill::query()
             ->join('order_details', 'orders.id','=','order_details.order_id')
             ->orderBy('order_date','desc')

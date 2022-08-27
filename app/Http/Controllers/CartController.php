@@ -71,7 +71,7 @@ class CartController extends Controller
         $this->data['total'] = $total;
         $dataU = $request->all();
         $discount = DB::table('vouchers')
-            ->where('discount_code','=',$request->discount_code)
+            ->where('discount_code','like',$request->discount_code)
             ->first();
         return view('checkout', [
             'data' => $this->data,
@@ -120,7 +120,7 @@ class CartController extends Controller
                     $billDetail->voucher_id = $voucher_id->id;
                     $billDetail->number = $item->qty;
                     $billDetail->price = $item->price;
-                    $billDetail->total_money = FinalPrice($voucher_id->discount, $item->price);
+                    $billDetail->total_money = FinalPrice($voucher_id->discount, $item->price*$item->qty);
                     $billDetail->save();
                     $product = DB::table('products')
                         ->where('id', $item->id)

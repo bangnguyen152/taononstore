@@ -47,7 +47,7 @@
                                                     <td>{{$recentsale->order_date}}</td>
                                                     <td>{{$recentsale->full_name}}</td>
                                                     <td>{{ProductStatus($recentsale->status)}}</td>
-                                                    <td>{{$recentsale->total}}</td>
+                                                    <td>{{number_format($recentsale->total_money,0,',','.')}} VNĐ</td>
 
                                             </tr>
                                             @endforeach
@@ -60,7 +60,11 @@
                                 <div class="title">Top Seling Product</div>
                                 <ul class="top-sales-details">
                                     @foreach($topsellings as $topselling)
+                                        <li>
+
+                                        </li>
                                     <li>
+                                        <span class="product">{{$topselling->sold}}</span>
                                         <a href="{{route('product_detail',$topselling->id)}}">
                                             <!--<img src="images/sunglasses.jpg" alt="">-->
                                             <span class="product">{{$topselling->title}}</span>
