@@ -23,6 +23,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\VoucherController;
 use App\Models\CategoryModel;
@@ -110,7 +111,7 @@ Route::get('/mac',[PageController::class,'mac'])->name('mac');
 Route::get('/watch',[PageController::class,'watch'])->name('watch');
 Route::get('/amthanh',[PageController::class,'amthanh'])->name('amthanh');
 Route::get('/phukien',[PageController::class,'phukien'])->name('phukien');
-Route::get('search', 'searchController@search')->name('search');
+Route::post('/search', [SearchController::class,'search'])->name('search');
 
 // Cart
 Route::get('addtocart/{id}',[CartController::class,'addProductToCart'])->name('addtocart');

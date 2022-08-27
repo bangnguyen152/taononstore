@@ -7,7 +7,6 @@
     <title>Táo non</title>
     <link rel="stylesheet" href="{{asset('assets/css/base.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/css/home.css')}}" />
-
     <link
         rel="stylesheet"
         href="{{asset('assets/icon/themify-icons-font/themify-icons/themify-icons.css')}}"
@@ -351,17 +350,6 @@
             <div class="clear"></div>
         </div>
     </div>
-    <script>
-        const modalSearch = document.querySelector('.modal-search');
-        const searchBtn = document.querySelector('.nav-btn__search');
-        const closeSearchBtn = document.querySelector('.search-close');
-        searchBtn.addEventListener('click', () => {
-            modalSearch.classList.remove('hidden')
-        })
-        closeSearchBtn.addEventListener('click', () => {
-            modalSearch.classList.add('hidden')
-        })
-    </script>
     <footer class="footer">
         <div class="grid">
             <div class="grid__row">
@@ -458,9 +446,12 @@
         <div class="search-icon">
             <i class="ti-search search-icon"></i>
         </div>
+        <form action="{{route('search')}}" method="post">
+            @csrf
         <div class="search-input">
-            <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input__fillin">
+            <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input__fillin" name="search">
         </div>
+        </form>
         <div class="search-close">
             <i class="ti-close search-close__icon"></i>
         </div>
@@ -468,7 +459,6 @@
 </div>
 <script src="{{asset('assets/days/app.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/days/app.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
 </html>

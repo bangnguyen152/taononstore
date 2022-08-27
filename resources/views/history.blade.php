@@ -109,7 +109,7 @@
                                     <form action="{{route('comment')}}" method="post">
                                         @csrf
                                         <input type="text" name="product_id" value="{{$product->product_id}}" hidden>
-                                        
+
                                         <span class="order-item__rate"><button type="submit" class="btn btn-primary">Đánh giá</button></span>
                                     </form>
 

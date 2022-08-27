@@ -12,12 +12,10 @@ class SearchController extends Controller
         $search = $request->get('search');
         $products = DB::table('products')
             ->where('id','like',$search)
-            ->orwhere('sale','like',$search)
-            ->orwhere('msp','like','%'.$search.'%')
-            ->orWhere('type','like','%'.$search.'%')
-            ->orWhere('catalogue','like','%'.$search.'%')
-            ->orWhere('product_price','like','%'.$search.'%')
-            ->orWhere('product_name','like','%'.$search.'%')->paginate(4, ['*'], 'products');
-        return view('show_dropdown',compact("products"));
+            ->orwhere('discount','like',$search)
+            ->orWhere('description','like','%'.$search.'%')
+            ->orWhere('price','like','%'.$search.'%')
+            ->orWhere('title','like','%'.$search.'%')->paginate(10, ['*'], 'products');
+        return view('search_result',compact("products",'search'));
     }
 }

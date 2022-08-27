@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Táo non</title>
     <link rel="stylesheet" href="{{asset('assets/css/base.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/cart.css')}}" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{asset('assets/css/product-list.css')}}" />
 
     <link
         rel="stylesheet"
@@ -48,6 +47,7 @@
                 <a href="{{route('phukien')}}" class="nav-item__link">Phụ kiện</a>
             </li>
         </ul>
+
         <div class="nav-btn">
             <!-- btn cart -->
             <@if(!session()->has('id'))
@@ -66,6 +66,7 @@
                 </div>
                 <!-- btn search -->
             @endif
+            <!-- btn search -->
             <div class="nav-btn__search">
                 <i class="nav-icon ti-search"></i>
             </div>
@@ -91,82 +92,52 @@
         </div>
     </header>
     <div class="container">
-        <div class="grid__row">
-            <div class="grid__col--2 cart-content">
-                <div class="customer-infor">
-                    <h4>Thông tin khách hàng</h4>
+        <div class="grid">
+            <div class="grid__row">
+                <div class="grid__full-width">
+                    <div class="logo-category">
+                        <a href="" class="logo-category__link">
+                            <img src="https://cdn.tgdd.vn/Category/42/WiPhone-120x35.png" alt="">
+                        </a>
+                    </div>
                 </div>
-                        <div class="fillinform">
-                        </div>
-                        <div class="customer-address">
-                            <ul class="list-group mb-12">
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div>
-                                        <h6 class="my-0">Họ Tên</h6>
+            </div>
+            <!-- slider -->
+            <div class="grid__row">
+                <div class="grid__full-width">
+                    <div class="slider">
+                        <img class="slider__img" src="./assets/img/slider/slider1.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <!-- filter cate -->
+            <div class="grid__row">
+                <div class="grid__full-width">
+                    <div class="filter-cate">
+                        <a href="">Tất cả</a>
+                        <span class="filter-by">Xếp theo: Mới ra mắt <i class="ti-angle-down"></i></span>
+                    </div>
+                </div>
+            </div>
+            <!-- product cate -->
+            <div class="grid__row">
+                @foreach($products as $product)
+                    <div class="grid__col--3">
+                        <ul class="list-cate">
+                            <li class="product-wrap">
+                                <a href="{{route('product.detail',$product->id)}}">
+                                    <img src="{{$product->photo}}" alt="" class="product-img">
+                                    <h4 class="product-name">{{$product->title}}</h4>
+                                    <div class="product-price">
+                                        <span class="current-price">{{FinalPrice($product->discount,$product->price)}}</span>
+                                        <span class="non-sale-price">{{$product->price}}</span>
+                                        <span class="sale-percent"> -{{$product->discount}}%</span>
                                     </div>
-                                    <span class="text-muted">{{$dataU['full_name']}}</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div>
-                                        <h6 class="my-0">Số điện thoại</h6>
-                                    </div>
-                                    <span class="text-muted">{{$dataU['phone_number']}}</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div>
-                                        <h6 class="my-0">Địa chỉ</h6>
-                                    </div>
-                                    <span class="text-muted">{{$dataU['address']}}</span>
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div>
-                                        <h6 class="my-0">Ghi chú</h6>
-                                    </div>
-                                    <span class="text-muted">{{$dataU['note']}}</span>
-                                </li>
-                            </ul>
-
-                        </div>
-                        <br>
-                        <h4>Thông tin sản phẩm</h4>
-                        <br>
-                        <div>
-                            <ul class="list-group mb-12">
-                                @foreach($data['cart'] as $product)
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div>
-                                        <h6 class="my-0">{{$product->name}}</h6>
-                                        <small class="text-muted">x {{$product->qty}}</small>
-                                    </div>
-                                    <span class="text-muted">{{number_format($product->price,0,',','.')}} VNĐ</span>
-                                </li>
-                                @endforeach
-                                <li class="list-group-item d-flex justify-content-between bg-light">
-                                    <div class="text-success">
-                                        <h6 class="my-0">Voucher</h6>
-                                        <small class="text-muted">{{$dataU['discount_code']}}</small>
-                                    </div>
-                                    <span class="text-success">-{{number_format($discount->discount,0,',','.')}} VNĐ</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Total (VNĐ)</span>
-                                    <strong>{{number_format(FinalPrice($discount->discount,$data['total']),0,',','.')}} VNĐ</strong>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="submit-form">
-                            <div class="total-provisional total-price">
-                            </div>
-                            <form  action="{{route('purchase')}}" method="post">
-                                @csrf
-                            <input type="text" value="{{$dataU['discount_code']}}" hidden name="discount_code">
-                            <input type="text" value="{{$dataU['full_name']}}" hidden name="full_name">
-                            <input type="text" value="{{$dataU['phone_number']}}" hidden name="phone_number">
-                            <input type="text" value="{{$dataU['address']}}" hidden name="address">
-                            <input type="text" value="{{$dataU['note']}}" hidden name="note">
-                            <button type='submit' class="submit-btn">Đặt hàng</button>
-                            </form>
-                        </div>
-
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -281,5 +252,7 @@
 <script type="text/javascript" src="{{asset('assets/days/app.js')}}"></script>
 </body>
 </html>
+
+
 
 

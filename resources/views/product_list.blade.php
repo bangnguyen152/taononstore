@@ -237,9 +237,12 @@
         <div class="search-icon">
             <i class="ti-search search-icon"></i>
         </div>
-        <div class="search-input">
-            <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input__fillin">
-        </div>
+        <form action="{{route('search')}}" method="post">
+            @csrf
+            <div class="search-input">
+                <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input__fillin" name="search">
+            </div>
+        </form>
         <div class="search-close">
             <i class="ti-close search-close__icon"></i>
         </div>

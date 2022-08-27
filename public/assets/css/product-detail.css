@@ -121,6 +121,9 @@
   width: calc(100% - 20px);
   font-weight: 400;
 }
+.btn-wrap {
+    display: flex;
+}
 .primary-btn {
     background-color:#0071e3 ;
     font-weight: 600;
@@ -132,6 +135,12 @@
     padding: 15px 0;
     border-radius: 10px;
     cursor: pointer;
+    flex: 1;
+    text-align: center;
+}
+a.add-cart-btn.primary-btn {
+    text-align: center;
+    flex: 1;
 }
 .policy-wrap {
   margin: 8px 0 30px;

@@ -106,8 +106,10 @@
                 <h1 class="product-name">
                     {{$products->title}}
                 </h1>
-                <span class="price-promo-title">Giá </span>
-                <h2 class="product-price">{{number_format($products->price,0,',','.')}}đ</h2>
++                <h2 class="product-price">{{number_format($products->price,0,',','.')}}đ</h2>
+                @if($product->status===0)
+                        <h1 class="product-price">Đã hết hàng</h1>
+                @endif
                 <div class="product-capacity">
                     <span class="product-capacity__detail">RAM {{$products->ram}}  - ROM {{$products->capacity}}</span>
                 </div>
@@ -142,11 +144,13 @@
                     </ul>
                 </div>
                 <div class="btn-wrap">
+                    @if($product->status===1)
                     <button class="buy-now-btn primary-btn">Mua ngay</button>
                     @if(session()->has('id'))
                     <a class="add-cart-btn primary-btn" href="{{route('addtocart',$product->id)}}" role="button">Thêm vào giỏ</a>
                     @else
                         <a class="add-cart-btn primary-btn" href="{{route('login')}}" role="button">Thêm vào giỏ</a>
+                    @endif
                     @endif
 {{--                    <button class="add-cart-btn primary-btn"><a href="">Thêm vào giỏ</a></button>--}}
                 </div>
@@ -283,9 +287,12 @@
         <div class="search-icon">
             <i class="ti-search search-icon"></i>
         </div>
-        <div class="search-input">
-            <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input__fillin">
-        </div>
+        <form action="{{route('search')}}" method="post">
+            @csrf
+            <div class="search-input">
+                <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input__fillin" name="search">
+            </div>
+        </form>
         <div class="search-close">
             <i class="ti-close search-close__icon"></i>
         </div>
