@@ -7,6 +7,7 @@
     <title>Táo non</title>
     <link rel="stylesheet" href="{{asset('assets/css/base.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/css/cart.css')}}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link
         rel="stylesheet"
@@ -99,44 +100,72 @@
                     </a>
                     <span>Giỏ hàng của bạn</span>
                 </div>
+                <form action="{{route('cart')}}" method='post'>
+
                 <div class="middle-cart">
                     <ul class="cart-list">
                         @if(count($products))
                             @foreach($products as $product)
                         <li class="cart-item">
-                            <img
-                                src="{{ asset('/'.$product->options->thumbnail)}}"
-                                alt=""
-                                class="cart-item__img"
-                            />
+{{--                            <img--}}
+{{--                                src="{{ asset('/'.$product->options->thumbnail)}}"--}}
+{{--                                alt=""--}}
+{{--                                class="cart-item__img"--}}
+{{--                            />--}}
 
-                            <div class="cart-item__info">
-                                <div class="cart-item__name-color">
-                      <span class="cart-item__name"
-                      >{{$product->name}}</span
-                      >
-                                    <div class="cart-item__color-del-wrap">
+{{--                            <div class="cart-item__info">--}}
+{{--                                <div class="cart-item__name-color">--}}
+{{--                      <span class="cart-item__name"--}}
+{{--                      >{{$product->name}}</span--}}
+{{--                      >--}}
+{{--                                    <div class="cart-item__color-del-wrap">--}}
 {{--                                        <span class="cart-item__color">Màu: Bạc</span>--}}
-                                        <a class="cart-item__delete" href="{{route('remove',$product->rowId)}}" role="button">Xóa</a>
+{{--                                        <a class="cart-item__delete" href="{{route('remove',$product->rowId)}}" role="button">Xóa</a>--}}
 
 {{--                                        <button class="cart-item__delete">Xoá</button>--}}
-                                    </div>
-                                    <td class="cart_quantity">
-                                        <a href='{{url("gio-hang?id=$product->id&increment=1")}}'><button type="button" class="btn btn-default">+</button></a>
-                                        <input type="text" value="{{ $product->qty }}" style="width: 35px; text-align: center;">
-                                        <a href='{{url("gio-hang?id=$product->id&decrease=1")}}'><button type="button" class="btn btn-default">-</button></a>
-                                    </td>
+{{--                                    </div>--}}
+
+
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="cart-item__price">--}}
+{{--                                <span class="current-price">{{number_format($product->price,0,',','.')}}đ</span>--}}
+{{--                                <span class="non-sale-price">{{number_format($product->price,0,',','.')}}đ</span>--}}
+{{--                            </div>--}}
+                            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                    <img
+                                        src="{{ asset('/'.$product->options->thumbnail)}}"
+                                        class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                </div>
+
+                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                    <h6 class="text-muted">{{$product->name}}</h6>
+{{--                                    <h6 class="text-black mb-0">Cotton T-shirt</h6>--}}
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                    <a href='{{url("cart?id=$product->id&decrease=1")}}'><button type="button" class="btn btn-default">-</button></a>
+                                    <input type="text" value="{{ $product->qty }}" style="width: 35px; text-align: center;">
+                                    <a href='{{url("cart?id=$product->id&increment=1")}}'><button type="button" class="btn btn-default">+</button></a>
 
                                 </div>
+                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                    <h6 class="mb-0">{{number_format($product->price,0,',','.')}} VNĐ</h6>
+                                </div>
+                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                    <a href="{{route('remove',$product->rowId)}}" class="text-muted"><i class="fas fa-times">Xóa</i></a>
+                                </div>
                             </div>
-                            <div class="cart-item__price">
-                                <span class="current-price">{{number_format($product->price,0,',','.')}}đ</span>
-{{--                                <span class="non-sale-price">{{number_format($product->price,0,',','.')}}đ</span>--}}
-                            </div>
+                        </form>
                         </li>
+                                <li>
+
+                                </li>
+                            @endforeach
+                        @endif
                     </ul>
-                    @endforeach
-                    @endif
+
+
                     <!-- total -->
                     <div class="total-provisional">
                         <span class="total-provisional__text">Tạm tính:</span>
@@ -146,7 +175,7 @@
                     <!-- customer info -->
                     <div class="customer-infor">
                         <h4>Thông tin khách hàng</h4>
-                        <form action="{{route('checkout')}}" class="customer-form" method="post" >
+                        <form action="{{route('checkout')}}" class="customer-form"  method="post" >
                             @csrf
 {{--                            <div class="customer-sex">--}}
 {{--                                <input type="radio" /> Nam <input type="radio" /> Nữ--}}
@@ -158,8 +187,9 @@
                                         placeholder="Tên của bạn"
                                         class="input-info"
                                         name="full_name"
-                                        value="{{$user->full_name}}"
                                     />
+                                    <p class="text-danger">{{ $errors->first('full_name') }}</p>
+
                                 </div>
                                 <div class="customer-phonenumber">
                                     <input
@@ -167,8 +197,9 @@
                                         placeholder="Số điện thoại"
                                         class="input-info"
                                         name="phone_number"
-                                        value="{{$user->phone_number}}"
                                     />
+                                    <p class="text-danger">{{ $errors->first('phone_number') }}</p>
+
                                 </div>
                             </div>
                             <div class="customer-address">
@@ -177,8 +208,9 @@
                                     placeholder="Địa chỉ"
                                     class="input-long"
                                     name="address"
-                                    value="{{$user->address}}"
                                 />
+                                <p class="text-danger">{{ $errors->first('address') }}</p>
+
                             </div>
                             <div class="customer-note">
                                 <input
@@ -187,11 +219,21 @@
                                     class="input-long"
                                     name="note"
                                 />
+                                <p class="text-danger">{{ $errors->first('note') }}</p>
+
+                            </div>
+                            <div class="customer-note">
+                                <input
+                                    type="text"
+                                    placeholder="Mã giảm giá"
+                                    class="input-long"
+                                    name="discount_code"
+                                />
+                                <p class="text-danger">{{ $errors->first('discount_code') }}</p>
+
                             </div>
                             <div class="submit-form">
                                 <div class="total-provisional total-price">
-                                    <span class="total-provisional__text">Tổng tiền:</span>
-                                    <span class="total-provisional__money">{{\Cart::total()}}VNĐ</span>
                                 </div>
                                 <button  class="submit-btn">Đặt hàng</button>
                             </div>
@@ -313,6 +355,7 @@
         </div>
     </div>
     <script src="{{asset('assets/days/app.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{asset('assets/days/app.js')}}"></script>
     </body>
     </html>

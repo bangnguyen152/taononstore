@@ -110,10 +110,6 @@
                                             </a>
                                         </div>
                                         </td>
-                                        <!--end::User=-->
-                                        <!--begin::Role=-->
-                                        <!--end::Role=-->
-                                        <!--begin::Last login=-->
                                         <td>
                                                     {{ $bill->address }}
                                         </td>

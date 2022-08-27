@@ -115,14 +115,14 @@ Route::get('search', 'searchController@search')->name('search');
 // Cart
 Route::get('addtocart/{id}',[CartController::class,'addProductToCart'])->name('addtocart');
 Route::get('/cart',[CartController::class,'listCartProduct'])->name('cart');
-// Route::get('/', ['as'=>'trangchu','uses'=>'PageController@index']);
-Route::get('/checkout', [CartController::class,'getCheckOut']);
-Route::post('/checkout', [CartController::class,'postCheckOut'])->name('checkout');
+Route::post('/checkout', [CartController::class,'getCheckOut'])->name('checkout');
+Route::post('/purchase', [CartController::class,'postCheckOut'])->name('purchase');
 Route::get('cart/remove/{id}', [CartController::class,'remove'])->name('remove');
 //profile
 Route::get('profile/{id}', [ProfileController::class,'index'])->name('profile');
 Route::post('profile/update/info/{id}', [ProfileController::class,'changeProfile'])->name('profile.update');
 Route::post('profile/update/password/{id}', [ProfileController::class,'changePassword'])->name('password.update')->middleware('change pass');
 Route::get('profile/history/{id}', [ProfileController::class,'history'])->name('history');
-Route::post('profile/comment/{id}', [ProfileController::class,'comment'])->name('comment');
+Route::post('profile/history/comment', [ProfileController::class,'comment_index'])->name('comment');
+Route::post('profile/history/comment/{id}', [ProfileController::class,'comment'])->name('comment.process');
 

@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $NumProduct = $product->count();
         $profit = Bill::query()
             ->join('order_details', 'orders.id','=','order_details.order_id')
-            -> where('status','=','4')
+            -> where('status','=','3')
             ->sum('price');
         $recentsales = Bill::query()
             ->join('order_details', 'orders.id','=','order_details.order_id')

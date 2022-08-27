@@ -68,9 +68,8 @@ class AdminBillController extends Controller
      */
     public function edit(Bill $bill)
     {
-        $customerInfo = DB::table('users')
-            ->join('orders', 'users.id', '=', 'orders.user_id')
-            ->select('users.*', 'orders.id as bill_id', 'orders.order_date', 'orders.note as bill_note', 'orders.status as bill_status')
+        $customerInfo = DB::table('orders')
+            ->select('orders.*')
             ->where('orders.id', '=', $bill->id)
             ->orderBy('order_date','desc')
             ->first();
@@ -78,9 +77,9 @@ class AdminBillController extends Controller
         $billInfo = DB::table('order_details')
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
             ->join('products', 'order_details.product_id', '=', 'products.id')
-//            ->join('vouchers', 'order_details.voucher_id', '=', 'vouchers.id')
+            ->join('vouchers', 'order_details.voucher_id', '=', 'vouchers.id')
             ->where('order_details.order_id', '=', $bill->id)
-            ->select('orders.*', 'order_details.*','order_details.total_money as bill_total', 'products.title as product_name')
+            ->select('orders.*', 'order_details.*','order_details.total_money as bill_total', 'products.title as product_name','vouchers.discount as voucher')
             ->get();
         $this->data['customerInfo'] = $customerInfo;
         $this->data['billInfo'] = $billInfo;

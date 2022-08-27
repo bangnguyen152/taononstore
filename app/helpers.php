@@ -219,7 +219,7 @@ if (! function_exists('checkLogin')) {
 if (! function_exists('FinalPrice')) {
     function FinalPrice($code,$price): float|int
     {
-        return $price-($code*$price/100);
+        return $price-$code;
     }
 }
 

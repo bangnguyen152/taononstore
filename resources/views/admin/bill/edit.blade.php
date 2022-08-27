@@ -14,22 +14,11 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
 
-
-    <link rel="preload" href="{{asset('css/plugins.bundle.css')}}" as="style"
-          onload="this.onload=null;this.rel='stylesheet'" type="text/css">
-    <noscript>
-        <link rel="stylesheet"
-              href="https://preview.keenthemes.com/metronic8/laravel/demo1/plugins/global/plugins.bundle.css">
-    </noscript>
-    <link rel="preload" href="{{asset('css/plugins-custom.bundle.css')}}" as="style"
-          onload="this.onload=null;this.rel='stylesheet'" type="text/css">
-    <noscript>
-        <link rel="stylesheet"
-              href="https://preview.keenthemes.com/metronic8/laravel/demo1/plugins/global/plugins-custom.bundle.css">
-    </noscript>
     <link href="{{asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('css/dashboard.css')}}" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"/>
 </head>
 
 
@@ -353,130 +342,131 @@
 
 
         <!--begin::Content-->
-        <div class="content d-flex flex-column flex-column-fluid " id="kt_content">
-    <div class="post d-flex flex-column-fluid" id="kt_post">
-        <div id="kt_content_container" class=" container-xxl ">
-            <div class="card">
-                <section class="content">
-                    <!-- Default box -->
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="container123  col-md-6"   style="">
-                                        <h4></h4>
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th class="col-md-4">Thông tin khách hàng</th>
-                                                <th class="col-md-6"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>Thông tin người đặt hàng</td>
-                                                <td>{{ $bills->full_name }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ngày đặt hàng</td>
-                                                <td>{{ $bills->order_date }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Số điện thoại</td>
-                                                <td>{{ $bills->phone_number }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Địa chỉ</td>
-                                                <td>{{ $bills->address }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email</td>
-                                                <td>{{ $bills->email }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ghi chú</td>
-                                                <td>{{ $bills->bill_note }}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+        <div class="container-fluid">
+            <div id="ui-view" data-select2-id="ui-view"><div><div class="card">
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-sm-4">
+                                    <h6 class="mb-3">From:</h6>
+                                    <div>
+                                        <strong>Táo Non Store</strong>
                                     </div>
-                                    <table id="myTable" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-                                        <thead>
-                                        <tr role="row">
-                                            <th class="sorting col-md-1" >STT</th>
-                                            <th class="sorting col-md-2">Tên sản phẩm</th>
-                                            <th class="sorting col-md-2">Số lượng</th>
-                                            <th class="sorting col-md-2">Mã giảm giá</th>
-                                            <th class="sorting col-md-2">Giá tiền</th>
-                                        </thead>
+                                    <div>Email: taonon@store.com</div>
+                                    <div>Phone: +48 123 456 789</div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <h6 class="mb-3">To:</h6>
+                                    <div>
+                                        <strong>{{$bills->full_name}}</strong>
+                                    </div>
+                                    <div>{{$bills->address}}</div>
+                                    <div>{{$bills->email}}</div>
+                                    <div>{{$bills->phone_number}}</div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <h6 class="mb-3">Details:</h6>
+                                    <div>ID:
+                                        <strong>{{$bills->id}}</strong>
+                                    </div>
+                                    <div>{{$bills->order_date}}</div>
+                                    <div>Account Name: {{$bills->email}}</div>
+                                </div>
+
+                            </div>
+
+                            <div class="table-responsive-sm">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th class="center">#</th>
+                                        <th>Item</th>
+                                        <th>Description</th>
+                                        <th class="center">Quantity</th>
+                                        <th class="right">Unit Cost</th>
+                                        <th class="right">Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php $num = 0?>
+                                    @foreach($bill_details as $bill_detail)
+                                    <tr>
+                                        <td class="center">{{$bill_detail->id}}</td>
+                                        <td class="left">{{$bill_detail->product_name}}</td>
+                                        <td class="left"></td>
+                                        <td class="center">{{$bill_detail->number}}</td>
+                                        <td class="right">{{number_format($bill_detail->price,0,',','.')}} VNĐ</td>
+                                        <td class="right">{{number_format($bill_detail->price*$bill_detail->number,0,',','.')}} VNĐ</td>
+                                    </tr>
+
+                                        @if($bill_detail->number!==1)
+                                            <?php $num += $bill_detail->price*$bill_detail->number;?>
+                                        @else
+                                           <?php $num += $bill_detail->price;?>
+
+                                        @endif
+
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-5 ml-auto">
+                                    <table class="table table-clear">
                                         <tbody>
-                                        @foreach($bill_details as $key => $bill)
-                                            <tr>
-                                                <td>{{ $key+1 }}</td>
-                                                <td>{{ $bill->product_name }}</td>
-                                                <td>{{ $bill->number }}</td>
-                                                <td></td>
-                                                <td>{{ number_format($bill->price) }} VNĐ</td>
-                                            </tr>
-
-                                        @endforeach
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td colspan="1"><b>Tổng tiền</b></td>
+                                            <td class="left">
+                                                <strong>Subtotal</strong>
+                                            </td>
+                                            <td class="right">{{number_format($num,0,',','.')}} VNĐ</td>
                                         </tr>
-                                        <?php
-                                        $sum=0
-                                        ?>
-                                        @foreach($bill_details as $key => $bill)
-                                            <?php $sum += $bill->price; ?>
-                                        @endforeach
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td colspan="1"><b class="text-red">{{ number_format($sum) }} VNĐ</b></td>
+                                            <td class="left">
+                                                <strong>Discount</strong>
+                                            </td>
+                                            <td class="right">-{{number_format($bill_detail->voucher,0,',','.')}} VNĐ</td>
                                         </tr>
-
-
+                                        <tr>
+                                            <td class="left">
+                                                <strong>Total</strong>
+                                            </td>
+                                            <td class="right">
+                                                <strong>{{number_format(FinalPrice($bill_detail->voucher,$num),0,',','.')}} VNĐ</strong>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <form action="{{route('bill.update',$bills->bill_id)}}" method="POST">
-                                    @csrf
-                                    <div class="col-md-8"></div>
-                                    <div class="col-md-4">
-                                        <div class="form-inline">
-                                            <label>Trạng thái giao hàng: </label>
-                                            <label>
-                                                <select name="status" class="form-control input-inline" style="width: 200px" >
-                                                    <option value=""></option>
-                                                    <option value="0">Chưa xử lí</option>
-                                                    <option value="1">Đã duyệt</option>
-                                                    <option value="2">Đang giao</option>
-                                                    <option value="3">Đã giao</option>
-                                                    <option value="4">Thất bại</option>
-                                                </select>
-                                            </label>
-                                            <input type="submit" value="Xử lý" class="btn btn-primary">
+                                <div class="col-md-12">
+                                    <form action="{{route('bill.update',$bills->id)}}" method="POST">
+                                        @csrf
+                                        <div class="col-md-8"></div>
+                                        <div class="col-md-4">
+                                            <div class="form-inline">
+                                                <label>Trạng thái giao hàng: </label>
+                                                <label>
+                                                    <select name="status" class="form-control input-inline" style="width: 200px" >
+                                                        <option value=""></option>
+                                                        <option value="0">Chưa xử lí</option>
+                                                        <option value="1">Đã duyệt</option>
+                                                        <option value="2">Đang giao</option>
+                                                        <option value="3">Đã giao</option>
+                                                        <option value="4">Thất bại</option>
+                                                    </select>
+                                                </label>
+                                                <input type="submit" value="Xử lý" class="btn btn-primary">
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
+
                             </div>
                         </div>
                     </div>
-                </section>
-            </div>
-        </div>
-    </div>
-            <!--end::Footer-->
-        </div>
-        <!--end::Wrapper-->
+                </div></div>
+        </div>        <!--end::Wrapper-->
     </div>
     <!--end::Page-->
 </div>
@@ -519,7 +509,8 @@
 <script src="{{asset('js/general.js')}}"></script>
 <script src="//code.jquery.com/jquery.js"></script>
 <!-- Bootstrap JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><!-- Bootstrap JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 

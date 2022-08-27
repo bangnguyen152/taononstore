@@ -38,7 +38,7 @@ body {
 .cart-item__info {
     margin: 0 20px;
 }
-.cart-item__img { 
+.cart-item__img {
     width: 80px;
     margin-left: 24px;
 }
@@ -84,10 +84,10 @@ body {
     margin: 0 3px;
     outline: #0071e3;
 }
-.cart-item__name-color { 
+.cart-item__name-color {
 
 }
-.cart-item__name { 
+.cart-item__name {
     font-size: 15px;
     display: block;
     font-weight: 400;
@@ -99,7 +99,7 @@ body {
     align-items: center;
     margin-top: 12px;
 }
-.cart-item__color { 
+.cart-item__color {
     font-size: 15px;
     display: block;
     font-weight: 400;
@@ -110,7 +110,7 @@ body {
     margin-right: 10px;
     cursor: pointer;
 }
-.cart-item__price { 
+.cart-item__price {
     width: 100px;
     margin-right: 24px;
 }
@@ -129,14 +129,14 @@ body {
     justify-content: space-between;
     padding: 0 24px 17px;
 }
-.total-provisional__text { 
+.total-provisional__text {
     font-weight: 600;
 }
-.total-provisional__money { 
+.total-provisional__money {
     font-weight: 600;
 }
 /* infor */
-.customer-infor { 
+.customer-infor {
     padding: 24px;
     border-top: #e5e5e5 solid 4px;
     border-bottom: #e5e5e5 solid 4px;
@@ -145,10 +145,10 @@ body {
     font-size: 15px;
     line-height: 20px;
 }
-.customer-form { 
-    
+.customer-form {
+
 }
-.customer-sex { 
+.customer-sex {
     padding-top: 10px;
 }
 .customer-sex input:nth-child(2) {

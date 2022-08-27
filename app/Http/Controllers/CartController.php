@@ -1,10 +1,14 @@
 <?php
 namespace App\Http\Controllers;
+use App\Http\Requests\CheckoutRequest;
 use App\Models\Bill;
 use App\Models\BillDeltail;
 use App\Models\ProductModel;
 use Carbon\Carbon;
+use Couchbase\View;
+use float\Cart;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
 class CartController extends Controller
@@ -34,14 +38,14 @@ class CartController extends Controller
         ];
         if (Request::get('id') && (Request::get('increment')) == 1) {
             $rows = \Cart::search(function($key, $value) {
-                return $key->id === Request::get('id');
+                return $key->id == Request::get('id');
             });
             $product = $rows->first();
             \Cart::update($product->rowId, $product->qty + 1);
         }
         if (Request::get('id') && (Request::get('decrease')) == 1) {
             $rows = \Cart::search(function($key, $value) {
-                return $key->id === Request::get('id');
+                return $key->id == Request::get('id');
             });
             $product = $rows->first();
             \Cart::update($product->rowId, $product->qty - 1);
@@ -51,14 +55,35 @@ class CartController extends Controller
         });
         return view('cart',$viewData);
     }
-    public function getCheckOut() {
+    public function getCheckOut(CheckoutRequest $request) {
         $this->data['title'] = 'Check out';
         $this->data['cart'] = \Cart::content();
-        $this->data['total'] = \Cart::total();
-        return view('checkout', $this->data);
+        $total =0;
+        foreach ($this->data['cart']as $proNum){
+            if ($proNum->qty!==1){
+                $total += $proNum->price*$proNum->qty;
+            }
+            else{
+                $total += $proNum->price;
+            }
+
+        }
+        $this->data['total'] = $total;
+        $dataU = $request->all();
+        $discount = DB::table('vouchers')
+            ->where('discount_code','=',$request->discount_code)
+            ->first();
+        return view('checkout', [
+            'data' => $this->data,
+            'dataU'=> $dataU,
+            'discount'=>$discount
+        ]);
     }
     public function postCheckOut(Request $request) {
         $cartInfor = \Cart::content();
+        $voucher_id = DB::table('vouchers')
+            ->where('discount_code','=',Request::get('discount_code'))
+            ->first();
         // validate
         // $rule = [
         //     'fullName' => 'required',
@@ -79,11 +104,11 @@ class CartController extends Controller
             // save
             $bill = new Bill;
             $bill->user_id = session()->get('id');
+            $bill->email = session()->get('email');
             $bill->full_name = Request::get('full_name');
             $bill->address = Request::get('address');
             $bill->phone_number = Request::get('phone_number');
             $bill->order_date = Carbon::now();
-            //$bill->total = str_replace(',', '', \Cart::total());
             $bill->note = Request::get('note');
             $bill->status = 0;
             $bill->save();
@@ -92,19 +117,28 @@ class CartController extends Controller
                     $billDetail = new BillDeltail();
                     $billDetail->order_id = $bill->id;
                     $billDetail->product_id = $item->id;
-                    //$billDetail->product_msp= $item->msp;
+                    $billDetail->voucher_id = $voucher_id->id;
                     $billDetail->number = $item->qty;
                     $billDetail->price = $item->price;
+                    $billDetail->total_money = FinalPrice($voucher_id->discount, $item->price);
                     $billDetail->save();
+                    $product = DB::table('products')
+                        ->where('id', $item->id)
+                        ->first();
+                    DB::table('products')
+                        ->where('id', $item->id)
+                        ->update([
+                            'sold'=> $product->sold+$item->qty,
+                        ]);
                 }
             }
+
             // del
             \Cart::destroy();
-
         } catch (Exception $e) {
             echo $e->getMessage();
         }
-        return redirect()->back()->with('alert','Purchase complete! Thanks for choosing our website ;)');
+        return redirect()->route('homepage');
     }
     public function remove($id){
         $product = ProductModel::find($id);

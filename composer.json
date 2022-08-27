@@ -14,7 +14,8 @@
         "laravolt/avatar": "^4.1",
         "symfony/http-client": "^6.1",
         "symfony/mailgun-mailer": "^6.1",
-        "yajra/laravel-datatables-oracle": "^10.0"
+        "yajra/laravel-datatables-oracle": "^10.0",
+      "ext-couchbase": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

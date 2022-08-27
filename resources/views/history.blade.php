@@ -106,7 +106,13 @@
                             <li class="order-item">
                                 <div class="order-item__top">
                                     <span class="order-item__status">{{ProductStatus($product->product_status)}}</span>
-                                    <span class="order-item__rate">Đánh giá</span>
+                                    <form action="{{route('comment')}}" method="post">
+                                        @csrf
+                                        <input type="text" name="product_id" value="{{$product->product_id}}" hidden>
+                                        
+                                        <span class="order-item__rate"><button type="submit" class="btn btn-primary">Đánh giá</button></span>
+                                    </form>
+
                                 </div>
 
                                 <ul class="order-item__detail-list">
@@ -122,7 +128,7 @@
                           >
                                             <div class="order-item__wrap-color-qnt">
 {{--                                                <span class="order-item__color">Màu: Bạc</span>--}}
-                                                <span class="order-item__quantity">x1</span>
+                                                <span class="order-item__quantity">x{{$product->product_qty}}</span>
                                             </div>
                                         </div>
                                         <div class="order-item__price">
@@ -146,160 +152,5 @@
         </div>
     </div>
 </div>
-<div class="modal modal-js">
-    <div class="modal__container">
-        <div class="modal__rate">
-            <span class="modal__rate-title">Đánh giá sản phẩm</span>
-            <form action="{{route('comment',$product->product_id)}}" method="post">
-            <ul class="rate__star-list">
-                <li class="rate__star-each">
-                    <svg viewBox="0 0 30 30" class="star-solid" style="width: 100%">
-                        <defs>
-                            <linearGradient
-                                id="star__solid"
-                                x1="50%"
-                                x2="50%"
-                                y1="0%"
-                                y2="100%"
-                            >
-                                <stop offset="0%" stop-color="#FFCA11"></stop>
-                                <stop offset="100%" stop-color="#FFAD27"></stop>
-                            </linearGradient>
-                        </defs>
-                        <path
-                            fill="url(#star__solid)"
-                            fill-rule="evenodd"
-                            d="M14.9988798 25.032153l-8.522024 4.7551739c-.4785069.2670004-.7939037.0347448-.7072938-.5012115l1.6339124-10.1109185-6.8944622-7.1327607c-.3871203-.4005006-.2499178-.7947292.2865507-.8774654l9.5090982-1.46652789L14.5740199.51703028c.2346436-.50460972.6146928-.50543408.8497197 0l4.2693588 9.18141263 9.5090986 1.46652789c.545377.0841102.680337.4700675.28655.8774654l-6.894462 7.1327607 1.633912 10.1109185c.08788.5438118-.232337.7662309-.707293.5012115l-8.5220242-4.7551739z"
-                        ></path>
-                    </svg>
-                </li>
-                <li class="rate__star-each">
-                    <svg viewBox="0 0 30 30" class="star-regular">
-                        <defs>
-                            <linearGradient
-                                id="star__hollow"
-                                x1="50%"
-                                x2="50%"
-                                y1="0%"
-                                y2="99.0177926%"
-                            >
-                                <stop offset="0%" stop-color="#FFD211"></stop>
-                                <stop offset="100%" stop-color="#FFAD27"></stop>
-                            </linearGradient>
-                        </defs>
-                        <path
-                            fill="none"
-                            fill-rule="evenodd"
-                            stroke="url(#star__hollow)"
-                            stroke-width="2"
-                            d="M23.226809 28.390899l-1.543364-9.5505903 6.600997-6.8291523-9.116272-1.4059447-4.01304-8.63019038-4.013041 8.63019038-9.116271 1.4059447 6.600997 6.8291523-1.543364 9.5505903 8.071679-4.5038874 8.071679 4.5038874z"
-                        ></path>
-                    </svg>
-                </li>
-                <li class="rate__star-each">
-                    <svg viewBox="0 0 30 30" class="star-regular">
-                        <defs>
-                            <linearGradient
-                                id="star__hollow"
-                                x1="50%"
-                                x2="50%"
-                                y1="0%"
-                                y2="99.0177926%"
-                            >
-                                <stop offset="0%" stop-color="#FFD211"></stop>
-                                <stop offset="100%" stop-color="#FFAD27"></stop>
-                            </linearGradient>
-                        </defs>
-                        <path
-                            fill="none"
-                            fill-rule="evenodd"
-                            stroke="url(#star__hollow)"
-                            stroke-width="2"
-                            d="M23.226809 28.390899l-1.543364-9.5505903 6.600997-6.8291523-9.116272-1.4059447-4.01304-8.63019038-4.013041 8.63019038-9.116271 1.4059447 6.600997 6.8291523-1.543364 9.5505903 8.071679-4.5038874 8.071679 4.5038874z"
-                        ></path>
-                    </svg>
-                </li>
-                <li class="rate__star-each">
-                    <svg viewBox="0 0 30 30" class="star-regular">
-                        <defs>
-                            <linearGradient
-                                id="star__hollow"
-                                x1="50%"
-                                x2="50%"
-                                y1="0%"
-                                y2="99.0177926%"
-                            >
-                                <stop offset="0%" stop-color="#FFD211"></stop>
-                                <stop offset="100%" stop-color="#FFAD27"></stop>
-                            </linearGradient>
-                        </defs>
-                        <path
-                            fill="none"
-                            fill-rule="evenodd"
-                            stroke="url(#star__hollow)"
-                            stroke-width="2"
-                            d="M23.226809 28.390899l-1.543364-9.5505903 6.600997-6.8291523-9.116272-1.4059447-4.01304-8.63019038-4.013041 8.63019038-9.116271 1.4059447 6.600997 6.8291523-1.543364 9.5505903 8.071679-4.5038874 8.071679 4.5038874z"
-                        ></path>
-                    </svg>
-                </li>
-                <li class="rate__star-each">
-                    <svg viewBox="0 0 30 30" class="star-regular">
-                        <defs>
-                            <linearGradient
-                                id="star__hollow"
-                                x1="50%"
-                                x2="50%"
-                                y1="0%"
-                                y2="99.0177926%"
-                            >
-                                <stop offset="0%" stop-color="#FFD211"></stop>
-                                <stop offset="100%" stop-color="#FFAD27"></stop>
-                            </linearGradient>
-                        </defs>
-                        <path
-                            fill="none"
-                            fill-rule="evenodd"
-                            stroke="url(#star__hollow)"
-                            stroke-width="2"
-                            d="M23.226809 28.390899l-1.543364-9.5505903 6.600997-6.8291523-9.116272-1.4059447-4.01304-8.63019038-4.013041 8.63019038-9.116271 1.4059447 6.600997 6.8291523-1.543364 9.5505903 8.071679-4.5038874 8.071679 4.5038874z"
-                        ></path>
-                    </svg>
-                </li>
-            </ul>
-            </form>
-        </div>
-        <div class="modal__comment">
-            <input type="text" class="modal__comment-input" placeholder="Chia sẻ về trải nghiệm của bạn tại đây nha" name="commnet">
-        </div>
-        <div class="modal__control">
-            <button class="modal__control-back">Trở lại</button>
-            <button class="modal__control-submit">Đánh giá</button>
-        </div>
-    </div>
-</div>
-<script>
-    const modalEl = document.querySelector(".modal-js")
-    const rateBtnEl = document.querySelector(".order-item__rate")
-
-    const controlBackEl = document.querySelector(".modal__control-back")
-    const controlSubmitEl = document.querySelector(".modal__control-submit")
-    const modalStarsEl = document.querySelectorAll(".rate__star-each")
-    const openModal = function () {
-        modalEl.classList.add("open")
-    }
-    const closeModal = function () {
-        if(modalEl.classList.contains("open"))
-        {
-            modalEl.classList.remove("open")
-
-        }
-    }
-    rateBtnEl.addEventListener("click", function() {
-        modalEl.classList.add("open")
-
-    })
-    controlBackEl.addEventListener("click", closeModal)
-    controlSubmitEl.addEventListener("click", closeModal)
-</script>
 </body>
 </html>
